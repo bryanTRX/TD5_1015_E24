@@ -1,4 +1,10 @@
-﻿#include "Personnage.hpp"
+﻿// Programme contenant le projet du TD5.
+// file		main.cpp
+// author	Iliass Khider et Bryan Alexandre Tavares
+// date		4 mai 2024
+// Créé le	10 mai 2024
+
+#include "Personnage.hpp"
 #include "Vilain.hpp"
 #include "Heros.hpp"
 #include "VilainHeros.hpp"
@@ -95,7 +101,7 @@ int main()
     // Transférez les héros du vecteur heros dans une ListeLiee.
     vector<Heros> heros = lireVectorDuFichier<Heros>("heros.bin");
     ListeLiee<Heros> listeHeros;
-    for (auto& hero : heros) 
+    for (auto& hero : heros)
     {
         listeHeros.push_back(hero);
     }
@@ -122,14 +128,14 @@ int main()
 
     // Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur.
     auto itMario = trouverParNom(listeHeros, "Mario");
-    for (; itMario != listeHeros.begin(); itMario.reculer()) 
+    for (; itMario != listeHeros.begin(); itMario.reculer())
     {
         if ((*itMario).getNom() == "Mario")
         {
             break;
         }
     }
- 
+
     // Affichez le héros suivant dans la liste (devrait être "Naked Snake/John").
     auto itSuivantMario = itMario;
     itSuivantMario.avancer();
@@ -156,11 +162,11 @@ int main()
     cout << traitFor << endl;
 
     // Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
-    for (const auto& hero : listeHeros) 
+    for (const auto& h : listeHeros)
     {
-        hero.changerCouleur(cout, 2);
-        hero.afficher(cout);
-        hero.changerCouleur(cout, 4);
+        h.changerCouleur(cout, 2);
+        h.afficher(cout);
+        h.changerCouleur(cout, 4);
         cout << trait << endl;
     }
 
@@ -172,17 +178,17 @@ int main()
     // Utilisez un conteneur pour avoir les héros en ordre alphabétique.
     set<Heros, function<bool(const Heros&, const Heros&)>> setHeros([](const Heros& a, const Heros& b) { return a.getNom() < b.getNom(); });
 
-    for (const auto& heros : listeHeros)
+    for (const auto& h : listeHeros)
     {
-        setHeros.insert(heros);
+        setHeros.insert(h);
     }
 
     // Afficher les héros triés par ordre alphabétique
-    for (const auto& hero : setHeros) 
+    for (const auto& h : setHeros)
     {
-        hero.changerCouleur(cout, 2);
-        hero.afficher(cout);
-        hero.changerCouleur(cout, 4);
+        h.changerCouleur(cout, 2);
+        h.afficher(cout);
+        h.changerCouleur(cout, 4);
         cout << trait << endl;
     }
 }
