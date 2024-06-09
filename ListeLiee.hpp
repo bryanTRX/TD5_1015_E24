@@ -6,7 +6,7 @@ template<typename T> class ListeLiee;
 template<typename T> class Iterateur;
 
 template<typename T>
-struct Noeud
+class Noeud
 {
 	friend class ListeLiee<T>;
 	friend class Iterateur<T>;
@@ -43,14 +43,12 @@ public:
 		return position_->donnee_;
 	}
 
-	// Pre-increment operator
 	Iterateur<T>& operator++()
 	{
 		avancer();
 		return *this;
 	}
 
-	// Post-increment operator
 	Iterateur<T> operator++(int)
 	{
 		Iterateur<T> temp = *this;
@@ -58,7 +56,6 @@ public:
 		return temp;
 	}
 
-	// Operators for range-based for loop
 	bool operator!=(const Iterateur<T>& it) const
 	{
 		return position_ != it.position_;
@@ -80,7 +77,8 @@ public:
 
 	~ListeLiee()
 	{
-		while (tete_ != nullptr) {
+		while (tete_ != nullptr)
+		{
 			Noeud<T>* temp = tete_;
 			tete_ = tete_->suivant_;
 			delete temp;
@@ -96,10 +94,13 @@ public:
 	void push_back(const T& item)
 	{
 		Noeud<T>* nouveauNoeud = new Noeud<T>(item);
-		if (estVide()) {
+		if (estVide())
+		{
 			tete_ = queue_ = nouveauNoeud;
 		}
-		else {
+
+		else
+		{
 			queue_->suivant_ = nouveauNoeud;
 			nouveauNoeud->precedent_ = queue_;
 			queue_ = nouveauNoeud;
@@ -112,11 +113,14 @@ public:
 		Noeud<T>* position = it.position_;
 		Noeud<T>* nouveauNoeud = new Noeud<T>(item);
 
-		if (position->precedent_ != nullptr) {
+		if (position->precedent_ != nullptr)
+		{
 			position->precedent_->suivant_ = nouveauNoeud;
 			nouveauNoeud->precedent_ = position->precedent_;
 		}
-		else {
+
+		else 
+		{
 			tete_ = nouveauNoeud;
 		}
 
@@ -130,17 +134,21 @@ public:
 	iterator erase(iterator it)
 	{
 		Noeud<T>* position = it.position_;
-		if (position == tete_) {
+		if (position == tete_) 
+		{
 			tete_ = position->suivant_;
-			if (tete_ != nullptr) {
+			if (tete_ != nullptr) 
+			{
 				tete_->precedent_ = nullptr;
 			}
 		}
-		else {
+		else 
+		{
 			position->precedent_->suivant_ = position->suivant_;
 		}
 
-		if (position->suivant_ != nullptr) {
+		if (position->suivant_ != nullptr)
+		{
 			position->suivant_->precedent_ = position->precedent_;
 		}
 

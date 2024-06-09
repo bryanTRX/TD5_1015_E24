@@ -4,10 +4,7 @@
 // date		4 mai 2024
 // Créé le	10 mai 2024
 
-#include "Personnage.hpp"
-#include "Vilain.hpp"
 #include "Heros.hpp"
-#include "VilainHeros.hpp"
 #include "lireVectorDuFichier.hpp"
 #include "lectureBinaire.hpp"
 #include "ListeLiee.hpp"
@@ -17,7 +14,7 @@
 #include <vector>
 #include <functional>
 #include <memory>
-#include "set"
+#include <set>
 #include "cppitertools/range.hpp"
 #include "bibliotheque_cours.hpp"
 
@@ -39,28 +36,8 @@ void testsPourCouvertureLectureBinaire()
     assert(lireUintTailleVariable(iss) == 0xFEDCBA98);
 }
 
-// versReferenceAffichable permet d'avoir une référence à l'affichable, que le paramètre soit un unique_ptr ou une référence. 
-// On aurait pu faire un template plus générique pour const/non const, et même utiliser un concept, mais ce n'est pas nécessaire pour que ça fonctionne.
-// lireFichier aurait aussi pu retourner un vector de unique_ptr pour ne pas avoir besoin de versReferenceAffichable pour supporter à la fois les références et les unique_ptr.
-const Affichable& versReferenceAffichable(const Affichable& p) { return p; }
-template <typename T>
-const Affichable& versReferenceAffichable(const unique_ptr<T>& p) { return *p; }
-
 // Trait de separation
 static const string trait = "\n═════════════════════════════════════════════════════════════════════════";
-
-// On ne demande pas particulièrement la surcharge de << dans ce TD.
-template <typename T>
-void afficherAffichables(const vector<T>& affichables)
-{
-    static const string separateurElements = "\033[33m" + trait + "\033[0m\n";
-    for (auto&& a : affichables) {
-        cout << separateurElements;
-        auto& x = versReferenceAffichable(a);
-        x.changerCouleur(cout, 0);
-        x.afficher(cout);
-    }
-}
 
 // Permet d'avoir une référence non-const à un objet temporaire.
 template <typename T> T& temporaireModifiable(T&& objet) { return objet; }
@@ -109,7 +86,7 @@ int main()
     // Créez un itérateur sur la liste liée à la position du héros Alucard.
     auto itAlucard = trouverParNom(listeHeros, "Alucard");
 
-    // Servez-vous de l'itérateur créé précédemment pour trouver l'héroine Aya Brea.
+    // Servir de l'itérateur créé précédemment pour trouver l'héroine Aya Brea.
     auto itAyaBrea = itAlucard;
     for (; itAyaBrea != listeHeros.end(); itAyaBrea.avancer())
     {
@@ -123,10 +100,10 @@ int main()
     Heros heroBidon("Guardian", "Destiny 2", "The Witness");
     listeHeros.insert(itAyaBrea, heroBidon);
 
-    // Assurez-vous que la taille de la liste est correcte après l'ajout.
+    // Assurer que la taille de la liste est correcte après l'ajout.
     assert(listeHeros.size() == heros.size() + 1);
 
-    // Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur.
+    // Reculez notre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur.
     auto itMario = trouverParNom(listeHeros, "Mario");
     for (; itMario != listeHeros.begin(); itMario.reculer())
     {
@@ -141,13 +118,13 @@ int main()
     itSuivantMario.avancer();
     listeHeros.erase(itMario);
 
-    // Assurez-vous que la taille de la liste est correcte après le retrait.
+    // Assurer que la taille de la liste est correcte après le retrait.
     assert(listeHeros.size() == heros.size());
 
     // Effacez le premier élément de la liste.
     listeHeros.erase(listeHeros.begin());
 
-    // Affichez votre liste de héros en utilisant un itérateur.
+    // Afficher liste de héros en utilisant un itérateur.
     for (auto it = listeHeros.begin(); it != listeHeros.end(); it.avancer())
     {
         (*it).changerCouleur(cout, 2);
