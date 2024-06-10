@@ -127,7 +127,12 @@ int main()
     // Affichage de notre liste de héros en utilisant un itérateur.
     for (auto it = listeHeros.begin(); it != listeHeros.end(); it.avancer())
     {
-        (*it).changerCouleur(cout, 2);
+        if ((*it).getNom() == "Naked Snake/John")
+            (*it).changerCouleur(cout, 3);  // Couleur différente pour Naked Snake/John
+
+        else 
+            (*it).changerCouleur(cout, 2);
+
         (*it).afficher(cout);
         (*it).changerCouleur(cout, 4);
         cout << trait << endl;
@@ -141,7 +146,11 @@ int main()
     // Refaire le même affichage mais en utilisant une simple boucle "for" sur intervalle.
     for (const auto& h : listeHeros)
     {
-        h.changerCouleur(cout, 2);
+        if (h.getNom() == "Naked Snake/John")
+            h.changerCouleur(cout, 3);
+        else
+            h.changerCouleur(cout, 2);
+
         h.afficher(cout);
         h.changerCouleur(cout, 4);
         cout << trait << endl;
@@ -168,4 +177,32 @@ int main()
         h.changerCouleur(cout, 4);
         cout << trait << endl;
     }
+
+    // ------------------------------------------------------------ Affichage de notre liste en ordre alphabétique ------------------------------------------------------------
+
+    const string traitDeRecherche = "\n\033[32m══════════════════════════════ Affichage d'un héros rechercher ══════════════════════════════════ ";
+    cout << traitDeRecherche << endl;
+
+    // 2.2 Affichage d'un des héros trouvé par son nom dans le set
+    // Recherche d'un héros par nom dans le set
+    auto itTrouve = setHeros.find(Heros("Alucard", "", ""));
+    if (itTrouve != setHeros.end())
+    {
+        itTrouve->changerCouleur(cout, 2);
+        itTrouve->afficher(cout);
+        itTrouve->changerCouleur(cout, 4);
+        cout << trait << endl;
+    }
+
+    // La complexité moyenne de cette recherche est O(log n) car std::set est généralement implémenté
+    // comme un arbre binaire de recherche équilibré. 
+
+    // 2.3 Explication de la recherche la plus rapide
+    // Lors d’une recherche d’un héros par le nom, le conteneur set permet la recherche la plus rapide
+    // comparé à la liste liée utilisée en 1. Ceci est dû au fait que la recherche dans un std::set a une
+    // complexité moyenne de O(log n) grâce à sa structure d’arbre binaire de recherche équilibré, tandis que
+    // la recherche dans une liste liée a une complexité moyenne de O(n) car il faut potentiellement parcourir
+    // chaque élément de la liste.
+
+    return 0;
 }
