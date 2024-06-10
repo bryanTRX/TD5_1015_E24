@@ -70,12 +70,12 @@ int main()
 
     testsPourCouvertureLectureBinaire();
 
-    // ------------------------------------------------------------ Affichage de notre liste apres avoir tester notre iterator ------------------------------------------------------------
+    // ------------------------------------------------------------ Affichage de notre listeHeros apres avoir tester notre iterator ------------------------------------------------------------
 
     const string traitHeros = "\n\033[32m══════════════════════════════ Modification de notre listeHeros ══════════════════════════════════\033[0m";
     cout << traitHeros << endl;
 
-    // Transférez les héros du vecteur heros dans une ListeLiee.
+    // Transfer des héros du vecteur heros dans une ListeLiee.
     vector<Heros> heros = lireVectorDuFichier<Heros>("heros.bin");
     ListeLiee<Heros> listeHeros;
     for (auto& hero : heros)
@@ -83,10 +83,10 @@ int main()
         listeHeros.push_back(hero);
     }
 
-    // Créez un itérateur sur la liste liée à la position du héros Alucard.
+    // Création d'un itérateur sur la liste liée à la position du héros Alucard.
     auto itAlucard = trouverParNom(listeHeros, "Alucard");
 
-    // Servir de l'itérateur créé précédemment pour trouver l'héroine Aya Brea.
+    // Utilisation de l'itérateur créé précédemment pour trouver l'héroine Aya Brea.
     auto itAyaBrea = itAlucard;
     for (; itAyaBrea != listeHeros.end(); itAyaBrea.avancer())
     {
@@ -96,14 +96,14 @@ int main()
         }
     }
 
-    // Ajouter un hero bidon à la liste avant Aya Brea en vous servant de l'itérateur.
+    // Ajout d'un hero bidon à la liste avant Aya Brea en vous servant de l'itérateur.
     Heros heroBidon("Guardian", "Destiny 2", "The Witness");
     listeHeros.insert(itAyaBrea, heroBidon);
 
-    // Assurer que la taille de la liste est correcte après l'ajout.
+    //Verification que la taille de la liste est correcte après l'ajout.
     assert(listeHeros.size() == heros.size() + 1);
 
-    // Reculez notre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur.
+    // Recul de l'itérateur jusqu'au héros Mario et effacement de celui ci en utilisant l'itérateur.
     auto itMario = trouverParNom(listeHeros, "Mario");
     for (; itMario != listeHeros.begin(); itMario.reculer())
     {
@@ -113,18 +113,18 @@ int main()
         }
     }
 
-    // Affichez le héros suivant dans la liste (devrait être "Naked Snake/John").
+    // Affichage du héros suivant dans la liste (devrait être "Naked Snake/John").
     auto itSuivantMario = itMario;
     itSuivantMario.avancer();
     listeHeros.erase(itMario);
 
-    // Assurer que la taille de la liste est correcte après le retrait.
+    // Verification que  la taille de la liste est correcte après le retrait.
     assert(listeHeros.size() == heros.size());
 
-    // Effacez le premier élément de la liste.
+    // Effacement du premier élément de la liste.
     listeHeros.erase(listeHeros.begin());
 
-    // Afficher liste de héros en utilisant un itérateur.
+    // Affichage de notre liste de héros en utilisant un itérateur.
     for (auto it = listeHeros.begin(); it != listeHeros.end(); it.avancer())
     {
         (*it).changerCouleur(cout, 2);
@@ -138,7 +138,7 @@ int main()
     const string traitFor = "\n\033[32m══════════════════════════════ Même affichage mais avec la boucle for ══════════════════════════════════\033[0m";
     cout << traitFor << endl;
 
-    // Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
+    // Refaire le même affichage mais en utilisant une simple boucle "for" sur intervalle.
     for (const auto& h : listeHeros)
     {
         h.changerCouleur(cout, 2);
@@ -152,7 +152,7 @@ int main()
     const string traitAlphabetique = "\n\033[32m══════════════════════════════ Affichage des Héros en ordre alphabétique ══════════════════════════════════ ";
     cout << traitAlphabetique << endl;
 
-    // Utilisez un conteneur pour avoir les héros en ordre alphabétique.
+    // Utilisation d'un conteneur pour avoir les héros en ordre alphabétique.
     set<Heros, function<bool(const Heros&, const Heros&)>> setHeros([](const Heros& a, const Heros& b) { return a.getNom() < b.getNom(); });
 
     for (const auto& h : listeHeros)
@@ -160,7 +160,7 @@ int main()
         setHeros.insert(h);
     }
 
-    // Afficher les héros triés par ordre alphabétique
+    // Affichage des héros triés par ordre alphabétique
     for (const auto& h : setHeros)
     {
         h.changerCouleur(cout, 2);
