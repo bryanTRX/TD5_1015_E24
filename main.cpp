@@ -12,6 +12,7 @@
 #include <sstream>
 #include <cassert>
 #include <vector>
+#include <string>
 #include <functional>
 #include <memory>
 #include <set>
@@ -128,11 +129,16 @@ int main()
     for (auto it = listeHeros.begin(); it != listeHeros.end(); it.avancer())
     {
         if ((*it).getNom() == "Naked Snake/John")
+        {
             (*it).changerCouleur(cout, 3);  // Couleur différente pour Naked Snake/John
+        }
+            
 
-        else 
+        else
+        {
             (*it).changerCouleur(cout, 2);
-
+        }
+            
         (*it).afficher(cout);
         (*it).changerCouleur(cout, 4);
         cout << trait << endl;
@@ -147,10 +153,15 @@ int main()
     for (const auto& h : listeHeros)
     {
         if (h.getNom() == "Naked Snake/John")
+        {
             h.changerCouleur(cout, 3);
+        }
+            
         else
+        {
             h.changerCouleur(cout, 2);
-
+        }
+            
         h.afficher(cout);
         h.changerCouleur(cout, 4);
         cout << trait << endl;
